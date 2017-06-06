@@ -1,5 +1,5 @@
 body {
-    padding: 0 18rem;
+    padding: 0 10rem;
 }
 
 button[type=submit] {
@@ -20,6 +20,10 @@ button[type=submit]:hover {
 
 button[type=submit]:focus {
     outline: none;
+}
+
+ul, li {
+    list-style-type: none;
 }
 
 

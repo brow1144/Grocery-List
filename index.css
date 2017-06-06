@@ -17,3 +17,14 @@ button[type=submit]:hover {
     background-color: #4CAF50;
     color: white;
 }
+
+button[type=submit]:focus {
+    outline: none;
+}
+
+
+
+
+
+
+

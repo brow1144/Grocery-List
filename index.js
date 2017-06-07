@@ -56,7 +56,6 @@ function validateNewItem(value) {
 function findItemToRemove(value) {
     for(let i = 0; i < itemArray.length; i++) {
         if(itemArray[i] == value)   {
-            //alert('Do you want to delete?')
             itemArray.splice(i, 1)
             return false
         }
@@ -64,8 +63,9 @@ function findItemToRemove(value) {
     return true
 }
 
+//Checks if input string is only A-Z, a-z, 0-9
 function isValid(str) {
-    return /^\w+$/.test(str)
+    return !/[^a-zA-Z0-9]S/g.test(str)
 }
 
 function handleAdd(e) {

@@ -22,8 +22,12 @@ button[type=submit]:focus {
     outline: none;
 }
 
-ul, li {
+li {
     list-style-type: none;
+    height: 40px;
+    border: 2px solid grey;
+    margin: 20px 0 0 0;
+    padding: 5px 0 0 10px;
 }
 
 

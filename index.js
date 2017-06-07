@@ -1,5 +1,5 @@
 const itemForm = document.querySelector('#itemForm')
-let c = 0
+
 let itemArray = []
 
 function renderItem(item) {
@@ -20,21 +20,16 @@ function renderList(item) {
 
 function handleAdd(e) {
     e.preventDefault()
-
-    if(c == 1) {
-    const x = document.querySelector('ul')
-    x.remove() 
-    }
-
     const listItem = e.target
 
+    if(itemArray.length > 0) {
+        const x = document.querySelector('ul')
+        x.remove() 
+    }
+
     itemArray.unshift(listItem.groceryItem.value)
-
     itemForm.appendChild(renderList(listItem.groceryItem.value))
-
-    //itemForm.appendChild(renderItem(listItem.groceryItem.value))
     listItem.reset()
-    c = 1
 }
 
 itemForm.addEventListener('submit', handleAdd)

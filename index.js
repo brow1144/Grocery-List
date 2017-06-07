@@ -64,12 +64,22 @@ function findItemToRemove(value) {
     return true
 }
 
+function isValid(str) {
+    return /^\w+$/.test(str)
+}
+
 function handleAdd(e) {
     e.preventDefault()
     const listItem = e.target
 
     //TODO Check if item is already in list 
     if(validateNewItem(listItem.groceryItem.value) == false) return false
+
+    if (isValid(listItem.groceryItem.value) == false) {
+        alert('Please input an item that includes only letters(A-Z, a-z) and numbers(0-9)')
+        listItem.reset()
+        return false
+    }
 
     if(itemArray.length > 0) {
         const x = document.querySelector('ul')

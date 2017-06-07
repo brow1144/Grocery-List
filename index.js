@@ -4,6 +4,7 @@ let itemArray = []
 
 let favoriteArray = []
 
+//Create List Item and Buttons
 function renderItem(item) {
     const newItem = document.createElement('li')
 
@@ -11,6 +12,7 @@ function renderItem(item) {
     const noSpace = item.replace(/\s/g, '');
     //Make Label the Entered Item
     newItem.innerHTML = `${item}`
+    newItem.setAttribute(`class`, `${noSpace}`)
 
     const favoriteButton = document.createElement('button')
     favoriteButton.setAttribute('type', 'button')
@@ -30,36 +32,26 @@ function renderItem(item) {
 
     deleteButton.addEventListener('click', handleDelete)
 
-
     return newItem
 }
 
+//Create unordered list to put list items into 
 function renderList(item) {
     const list = document.createElement('ul')
 
     for (let i = 0; i < itemArray.length; i++) {
         const x = renderItem(itemArray[i])
         list.appendChild(x)
-
     }
 
     return list
 }
 
+//Check Item isn't already in the list 
 function validateNewItem(value) {
     for(let i = 0; i < itemArray.length; i++) {
         if(itemArray[i] == value)   {
             alert('That item is already in the list!')
-            return false
-        }
-    }
-    return true
-}
-
-function findItemToRemove(value) {
-    for(let i = 0; i < itemArray.length; i++) {
-        if(itemArray[i] == value)   {
-            itemArray.splice(i, 1)
             return false
         }
     }
@@ -71,18 +63,32 @@ function isValid(str) {
     return !/[^a-zA-Z0-9\s]/g.test(str)
 }
 
+//Remove deleted item from array
+function findItemToRemove(value) {
+    for(let i = 0; i < itemArray.length; i++) {
+        if(itemArray[i] == value)   {
+            itemArray.splice(i, 1)
+            //favoriteArray.splice(i , 1)
+            return false
+        }
+    }
+    return true
+}
+
+//Make sure all favorites stay highlighted
 function resetFavorites() {
     const listTag = document.querySelectorAll('li')
 
     for(let i = 0; i < listTag.length; i++) {
         for(let j = 0; j < favoriteArray.length; j++) {
-            if(listTag[i].firstElementChild.id == favoriteArray[j]) {
+            if(listTag[i].getAttribute('class') == favoriteArray[j]) {
                 listTag[i].style.backgroundColor = 'lightgreen'
             }
         }
     }  
 }
 
+//Handle new item
 function handleAdd(e) {
     e.preventDefault()
     const listItem = e.target
@@ -90,7 +96,6 @@ function handleAdd(e) {
     //TODO Check if item is already in list 
     if(validateNewItem(listItem.groceryItem.value) == false) return false
 
-    console.log(isValid(listItem.groceryItem.value))
     if (isValid(listItem.groceryItem.value) == false) {
         alert('Please input an item that includes only letters(A-Z, a-z) and numbers(0-9)')
         listItem.reset()
@@ -110,6 +115,7 @@ function handleAdd(e) {
     resetFavorites()   
 }
 
+//Handle Favorite Click
 function handleFavorite(e) {
     e.preventDefault()
         
@@ -125,6 +131,7 @@ function handleFavorite(e) {
     }
 }
 
+//Handle Delete Click
 function handleDelete(e) {
     e.preventDefault()
 
@@ -146,8 +153,8 @@ function handleDelete(e) {
     }
 
     resetFavorites()  
-
 }
+
 
 
 itemForm.addEventListener('submit', handleAdd)

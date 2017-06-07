@@ -4,10 +4,13 @@ let itemArray = []
 
 function renderItem(item) {
     const newItem = document.createElement('li')
+
     //Removes Spaces
     const noSpace = item.replace(/\s/g, '');
     //Make Label the Entered Item
     newItem.innerHTML = `${item}`
+    newItem.setAttribute('data-favorite', 'false')
+
     const favoriteButton = document.createElement('button')
     favoriteButton.setAttribute('type', 'button')
     //Give button id with no spaces to find which to highlight 
@@ -16,6 +19,15 @@ function renderItem(item) {
     newItem.appendChild(favoriteButton)
 
     favoriteButton.addEventListener('click', handleFavorite)
+
+    const deleteButton = document.createElement('button')
+    deleteButton.setAttribute('type', 'button')
+    deleteButton.setAttribute('class', `${noSpace}`)
+    deleteButton.textContent = 'Delete'
+    newItem.appendChild(deleteButton)
+
+    deleteButton.addEventListener('click', handleDelete)
+
 
     return newItem
 }
@@ -40,14 +52,23 @@ function validateNewItem(value) {
     return true
 }
 
+function findItemToRemove(value) {
+    for(let i = 0; i < itemArray.length; i++) {
+        if(itemArray[i] == value)   {
+            alert('Do you want to delete?')
+            itemArray.splice(i, 1)
+            return false
+        }
+    }
+    return true
+}
+
 function handleAdd(e) {
     e.preventDefault()
     const listItem = e.target
 
     //TODO Check if item is already in list 
-    if(validateNewItem(listItem.groceryItem.value) == false) {
-        return false
-    }
+    if(validateNewItem(listItem.groceryItem.value) == false) return false
 
     if(itemArray.length > 0) {
         const x = document.querySelector('ul')
@@ -67,9 +88,39 @@ function handleFavorite(e) {
 
     if (parent.style.backgroundColor == 'lightgreen') {
         parent.style.backgroundColor = 'whitesmoke'
+        parent.setAttribute('data-favorite', 'false')
     } else {            
         parent.style.backgroundColor = 'lightgreen'
+        parent.setAttribute('data-favorite', 'true')
     }
 }
 
+function handleDelete(e) {
+    e.preventDefault()
+
+    const item = document.querySelector(`#${e.target.className}`)
+    const parent = item.parentElement
+
+    findItemToRemove(e.target.className)
+
+    if(itemArray.length > 0) {
+        const x = document.querySelector('ul')
+        x.remove() 
+    }
+
+    if (itemArray.length > 0) {
+        itemForm.appendChild(renderList(e.target.className))
+    } else {
+        const x = document.querySelector('ul')
+        x.remove() 
+    }
+
+}
+
+
 itemForm.addEventListener('submit', handleAdd)
+
+
+
+
+

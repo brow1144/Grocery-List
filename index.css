@@ -28,6 +28,30 @@ li {
     border: 2px solid grey;
     margin: 20px 0 0 0;
     padding: 5px 0 0 10px;
+    background-color: whitesmoke;
+}
+
+button[type=button] {
+    float: right;
+    width: 80px;
+    height: 30px;
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    border: 2px solid #4CAF50; 
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin: -2px 5px 0 0px;
+}
+
+
+button[type=button]:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+button[type=button]:focus {
+    outline: none;
 }
 
 

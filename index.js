@@ -22,7 +22,8 @@ function renderItem(item) {
 
     const deleteButton = document.createElement('button')
     deleteButton.setAttribute('type', 'button')
-    deleteButton.setAttribute('class', `${noSpace}`)
+    deleteButton.setAttribute('id', `${noSpace}`)
+    deleteButton.setAttribute('class', `${item}`)
     deleteButton.textContent = 'Delete'
     newItem.appendChild(deleteButton)
 
@@ -55,7 +56,7 @@ function validateNewItem(value) {
 function findItemToRemove(value) {
     for(let i = 0; i < itemArray.length; i++) {
         if(itemArray[i] == value)   {
-            alert('Do you want to delete?')
+            //alert('Do you want to delete?')
             itemArray.splice(i, 1)
             return false
         }
@@ -98,7 +99,7 @@ function handleFavorite(e) {
 function handleDelete(e) {
     e.preventDefault()
 
-    const item = document.querySelector(`#${e.target.className}`)
+    const item = document.querySelector(`#${e.target.id}`)
     const parent = item.parentElement
 
     findItemToRemove(e.target.className)

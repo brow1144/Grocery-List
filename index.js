@@ -2,6 +2,8 @@ const itemForm = document.querySelector('#itemForm')
 
 let itemArray = []
 
+let favoriteArray = []
+
 function renderItem(item) {
     const newItem = document.createElement('li')
 
@@ -9,7 +11,6 @@ function renderItem(item) {
     const noSpace = item.replace(/\s/g, '');
     //Make Label the Entered Item
     newItem.innerHTML = `${item}`
-    newItem.setAttribute('data-favorite', 'false')
 
     const favoriteButton = document.createElement('button')
     favoriteButton.setAttribute('type', 'button')
@@ -37,7 +38,9 @@ function renderList(item) {
     const list = document.createElement('ul')
 
     for (let i = 0; i < itemArray.length; i++) {
-        list.appendChild(renderItem(itemArray[i]))
+        const x = renderItem(itemArray[i])
+        list.appendChild(x)
+
     }
 
     return list
@@ -63,9 +66,21 @@ function findItemToRemove(value) {
     return true
 }
 
-//Checks if input string is only A-Z, a-z, 0-9
+//Checks if input string is only A-Z, a-z, 0-9, or ' '
 function isValid(str) {
-    return !/[^a-zA-Z0-9]S/g.test(str)
+    return !/[^a-zA-Z0-9\s]/g.test(str)
+}
+
+function resetFavorites() {
+    const listTag = document.querySelectorAll('li')
+
+    for(let i = 0; i < listTag.length; i++) {
+        for(let j = 0; j < favoriteArray.length; j++) {
+            if(listTag[i].firstElementChild.id == favoriteArray[j]) {
+                listTag[i].style.backgroundColor = 'lightgreen'
+            }
+        }
+    }  
 }
 
 function handleAdd(e) {
@@ -75,6 +90,7 @@ function handleAdd(e) {
     //TODO Check if item is already in list 
     if(validateNewItem(listItem.groceryItem.value) == false) return false
 
+    console.log(isValid(listItem.groceryItem.value))
     if (isValid(listItem.groceryItem.value) == false) {
         alert('Please input an item that includes only letters(A-Z, a-z) and numbers(0-9)')
         listItem.reset()
@@ -87,8 +103,11 @@ function handleAdd(e) {
     }
     
     itemArray.unshift(listItem.groceryItem.value)
-    itemForm.appendChild(renderList(listItem.groceryItem.value))
+    const fullList = renderList(listItem.groceryItem.value)
+    const x = itemForm.appendChild(renderList(fullList))
     listItem.reset()
+
+    resetFavorites()   
 }
 
 function handleFavorite(e) {
@@ -99,10 +118,10 @@ function handleFavorite(e) {
 
     if (parent.style.backgroundColor == 'lightgreen') {
         parent.style.backgroundColor = 'whitesmoke'
-        parent.setAttribute('data-favorite', 'false')
+        favoriteArray.pop(e.target.id)
     } else {            
         parent.style.backgroundColor = 'lightgreen'
-        parent.setAttribute('data-favorite', 'true')
+        favoriteArray.push(e.target.id)
     }
 }
 
@@ -125,6 +144,8 @@ function handleDelete(e) {
         const x = document.querySelector('ul')
         x.remove() 
     }
+
+    resetFavorites()  
 
 }
 

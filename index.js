@@ -43,7 +43,7 @@ function renderList(item) {
         const x = renderItem(itemArray[i])
         list.appendChild(x)
     }
-
+    console.log(favoriteArray)
     return list
 }
 
@@ -78,6 +78,10 @@ function findItemToRemove(value) {
 //Make sure all favorites stay highlighted
 function resetFavorites() {
     const listTag = document.querySelectorAll('li')
+
+    for(let i = 0; i < listTag.length; i++) {
+        listTag[i].style.backgroundColor = 'whitesmoke'
+    }
 
     for(let i = 0; i < listTag.length; i++) {
         for(let j = 0; j < favoriteArray.length; j++) {
@@ -124,7 +128,7 @@ function handleFavorite(e) {
 
     if (parent.style.backgroundColor == 'lightgreen') {
         parent.style.backgroundColor = 'whitesmoke'
-        favoriteArray.pop(e.target.id)
+        //favoriteArray.pop(e.target.id)
     } else {            
         parent.style.backgroundColor = 'lightgreen'
         favoriteArray.push(e.target.id)
